@@ -23,7 +23,7 @@ namespace TestKatas
 
         public int ConvertToNumber(string romans)
         {
-            if(Romans.ContainsKey(romans))
+            if (Romans.ContainsKey(romans))
             {
                 return Romans[romans];
             }
@@ -35,27 +35,25 @@ namespace TestKatas
 
         private int ConvertToNumberNewKeys(string romans)
         {
-            int Number = 0;
             int result = 0;
+
             for (int Position = 0; Position < romans.Length; Position++)
             {
                 string Key = romans[Position].ToString();
-                
-                int Value = 0;
+                bool Check = false;
 
-                if (Romans.ContainsKey(Key))
+                if (Position < romans.Length - 1)
                 {
-                    Value = Romans[Key];
+                    if (Romans[Key] < Romans[romans[Position + 1].ToString()])
+                    {
+                        result = result - Romans[Key];
+                        Check = true;
+                    }
                 }
-                if(Value > Number)
+                if (Check == false)
                 {
-                    result = Value - Number;
+                    result = result + Romans[Key];
                 }
-                else
-                {
-                    result = result + Value;
-                }
-                Number = Value;
             }
             return result;
         }

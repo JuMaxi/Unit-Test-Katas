@@ -85,7 +85,13 @@ namespace TestKatas
         {
             int result = new RomanNumerals().ConvertToNumber("MMXXIII");
             result.Should().Be(2023);
+        }
 
+        [Fact]
+        public void GivenRomanNumeralTheYearWWIIEnded_WhenConverting_ShouldBe1945()
+        {
+            int result = new RomanNumerals().ConvertToNumber("MCMXLV");
+            result.Should().Be(1945);
         }
     }
 }
