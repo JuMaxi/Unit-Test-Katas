@@ -40,20 +40,17 @@ namespace TestKatas
             for (int Position = 0; Position < romans.Length; Position++)
             {
                 string Key = romans[Position].ToString();
-                bool Check = false;
+
+                result = result + Romans[Key];
 
                 if (Position < romans.Length - 1)
                 {
                     if (Romans[Key] < Romans[romans[Position + 1].ToString()])
                     {
-                        result = result - Romans[Key];
-                        Check = true;
+                        result = result - (Romans[Key] * 2);
                     }
                 }
-                if (Check == false)
-                {
-                    result = result + Romans[Key];
-                }
+               
             }
             return result;
         }
