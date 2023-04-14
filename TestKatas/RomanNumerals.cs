@@ -50,7 +50,6 @@ namespace TestKatas
                         result = result - (Romans[Key] * 2);
                     }
                 }
-               
             }
             return result;
         }
