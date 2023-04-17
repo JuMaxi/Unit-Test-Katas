@@ -11,64 +11,41 @@ namespace TestKatas
     {
         public int SumNumbers(string NumberString)
         {
-            int Number = ConvertingNumbers(NumberString);
-            return Number;
+            return CheckStringIsEmpty(NumberString);
         }
-        private int ConvertingNumbers(string NumberString)
+        private int CheckStringIsEmpty(string NumberString)
         {
-            if (NumberString == "")
-            {
-                return 0;
-            }
-            else
-            {
-                return SplitNumbers(NumberString);
-            }
+            return NumberString == "" ? 0 : ProcessNumbers(NumberString);
         }
-        private int SplitNumbers(string NumberString)
+        private int ProcessNumbers(string NumberString)
         {
             int Sum = 0;
 
-            if (NumberString.Length > 1)
+            List<int> Numbers = ReturnOnlyIntNumbers(NumberString);
+
+            for (int Position = 0; Position < Numbers.Count; Position++)
             {
-                List<string> NumberStringArray = ReturnJustNumbers(NumberString);
+                ShowExceptionNumberSmallerThanZero(Numbers[Position]);
 
-                for (int Position = 0; Position < NumberStringArray.Count; Position++)
-                {
-                    int Number = Convert.ToInt32(NumberStringArray[Position]);
-
-                    ShowingException(Number);
-
-                    Number = ReducingNumberBiggerThan1000(Number);
-
-                    Sum = Sum + Number;
-                }
-            }
-            else
-            {
-                Sum = Convert.ToInt32(NumberString);
-                ShowingException(Sum);
+                Sum = Sum + ReduceNumberBiggerThan1000(Numbers[Position]);
             }
             return Sum;
         }
-        private void ShowingException(int Number)
+        private void ShowExceptionNumberSmallerThanZero(int Number)
         {
             if (Number < 0)
             {
                 throw new Exception("The Number " + Number + " is smaller than Zero. You need fill out a number bigger than zero to continue.");
             }
         }
-        private int ReducingNumberBiggerThan1000(int Number)
+        private int ReduceNumberBiggerThan1000(int Number)
         {
-            if (Number > 1000)
-            {
-                return 0;
-            }
-            return Number;
+            return Number > 1000 ? 0 : Number; 
         }
-        private List<string> ReturnJustNumbers(string NumberString)
+
+        private List<int> ReturnOnlyIntNumbers(string NumberString)
         {
-            List<string> Numbers = new List<string>();
+            List<int> Numbers = new List<int>();
 
             string Characters = "";
 
@@ -85,19 +62,13 @@ namespace TestKatas
                 {
                     if (Characters != "" && Characters != "-")
                     {
-                        Numbers.Add(Characters);
+                        Numbers.Add(Convert.ToInt32(Characters));
                         Characters = "";
                     }
                 }
-
             }
             return Numbers;
         }
-      
-
-
-
-
 
     }
 }
