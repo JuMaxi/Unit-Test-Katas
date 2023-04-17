@@ -86,7 +86,7 @@ namespace TestKatas
         [Fact]
         public void GivenThatIHaveAStringWithSeveralDelimitorsWithBrackets_WhenConverting_ShouldBeSum()
         {
-            int Result = new StringCalculator().SumNumbers("//[-] [_]\n1-2_3-4,5");
+            int Result = new StringCalculator().SumNumbers("//[|] [_]\n1|2_3|4,5");
             Result.Should().Be(15);
         }
     }

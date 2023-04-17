@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestPlatform.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,12 +31,10 @@ namespace TestKatas
 
             if (NumberString.Length > 1)
             {
-                char[] Split = ReturnCharToSplit(NumberString);
-                string [] NumberStringArray = NumberString.Split(Split, StringSplitOptions.RemoveEmptyEntries);
+                List<string> NumberStringArray = ReturnJustNumbers(NumberString);
 
-                for (int Position = 0; Position < NumberStringArray.Length; Position++)
+                for (int Position = 0; Position < NumberStringArray.Count; Position++)
                 {
-                    
                     int Number = Convert.ToInt32(NumberStringArray[Position]);
 
                     ShowingException(Number);
@@ -67,66 +66,38 @@ namespace TestKatas
             }
             return Number;
         }
-        private char CustomizeDelimitor(string NumberString)
+        private List<string> ReturnJustNumbers(string NumberString)
         {
-            char Character = ' ';
-            for (int Position = 0; Position < NumberString.Length; Position++)
+            List<string> Numbers = new List<string>();
+
+            string Characters = "";
+
+            for (int PositionString = 0; PositionString < NumberString.Length; PositionString++)
             {
-                if (Position < NumberString.Length - 1)
+                if (char.IsDigit(NumberString[PositionString])
+                    || NumberString[PositionString] == '-')
                 {
-                    if (NumberString[Position] == '/')
+                    Characters = Characters + NumberString[PositionString].ToString();
+                }
+
+                if (char.IsDigit(NumberString[PositionString]) == false
+                    || PositionString == NumberString.Length - 1)
+                {
+                    if (Characters != "" && Characters != "-")
                     {
-                        if (NumberString[Position + 1] == '/')
-                        {
-                            if(NumberString[Position + 2] != '[')
-                            {
-                                Character = NumberString[Position + 2];
-                            }
-                            else
-                            {
-                                CustomizeDelimitor2(NumberString);
-                            }
-                        }
+                        Numbers.Add(Characters);
+                        Characters = "";
                     }
                 }
+
             }
-            return Character;
+            return Numbers;
         }
+      
 
-        private string CustomizeDelimitor2(string NumberString)
-        {
-            string Characteres = "'//',";
 
-            for(int Position = 0; Position < NumberString.Length; Position++) 
-            {
-                if (NumberString[Position] == '[')
-                {
-                    Characteres = Characteres + "'["+ NumberString[Position + 1] + "]', ";
-                }
-            }
-            return Characteres;
-        }
-        private char[] ReturnCharToSplit(string NumberString)
-        {
-            char Character = CustomizeDelimitor(NumberString);
-            string Characters = CustomizeDelimitor2(NumberString);
 
-            if (Character != ' ')
-            {
-                Characters = "'//" + Character + "',";
-            }
 
-            Characters = Characters + "',','\n'";
-            char[] Split = new char[Characters.Length];
 
-            for (int Position = 0; Position < Characters.Length; Position++)
-            {
-                Split[Position] = Characters[Position];
-            }
-
-            return Split;
-        }
-
-       
     }
 }
